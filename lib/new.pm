@@ -4,6 +4,19 @@ our $VERSION = '0.000001'; # 0.0.1
 
 $VERSION = eval $VERSION;
 
+use strict;
+use warnings;
+
+sub import {
+  my ($me, $class) = @_;
+  return unless $class;
+  my $targ = caller;
+  require join('/', split '::', $class).'.pm';
+  my $obj = $class->new;
+  no strict 'refs';
+  ${"${targ}::O"} = $obj;
+}
+
 1;
 
 =head1 NAME
