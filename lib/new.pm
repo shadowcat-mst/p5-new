@@ -12,9 +12,10 @@ sub import {
   return unless $class;
   my $targ = caller;
   require join('/', split '::', $class).'.pm';
+  my ($name) = @args && $args[0] =~ /^\$/ ? map /^\$(.*)/, shift @args : 'O';
   my $obj = $class->new(@args);
   no strict 'refs';
-  ${"${targ}::O"} = $obj;
+  ${"${targ}::${name}"} = $obj;
 }
 
 1;
