@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use lib 't/lib';
-use Test::More;
+use Test::More qw(no_plan);
 use new;
 
 our ($O, $E);
@@ -25,5 +25,3 @@ is $E->foo, 'foo', 'export with name works';
 new->import('ExampleClass', '$E', bars => 2);
 
 is $E->bar, 'bar bar', 'export with name and constructor args works';
-
-done_testing;
