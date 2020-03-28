@@ -8,11 +8,11 @@ use strict;
 use warnings;
 
 sub import {
-  my ($me, $class) = @_;
+  my ($me, $class, @args) = @_;
   return unless $class;
   my $targ = caller;
   require join('/', split '::', $class).'.pm';
-  my $obj = $class->new;
+  my $obj = $class->new(@args);
   no strict 'refs';
   ${"${targ}::O"} = $obj;
 }

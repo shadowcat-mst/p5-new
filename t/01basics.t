@@ -14,4 +14,8 @@ is $O->foo, 'foo', 'method works';
 
 is $O->bar, 'bar', 'method works';
 
+new->import('ExampleClass', bars => 3);
+
+is $O->bar, 'bar bar bar', 'method w/constructor args works';
+
 done_testing;
