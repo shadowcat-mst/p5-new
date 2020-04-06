@@ -13,7 +13,7 @@ sub import {
   my $targ = caller;
   require join('/', split '::', $class).'.pm';
   my ($name) = @args && $args[0] =~ /^\$/ ? map /^\$(.*)/, shift @args : 'O';
-  my $obj = $class->new(@args);
+  my $obj = $class->can('new') ? $class->new(@args) : $class;
   no strict 'refs';
   ${"${targ}::${name}"} = $obj;
 }
@@ -57,6 +57,9 @@ First we C<require> the file for C<$class>, then call
   $class->new(@args)
 
 then install the resulting object in C<$O> in the calling package.
+
+B<Caveat>: if C<$class> loads successfully but does not have a C<new> method,
+we install the C<$class> instead since you might want to call class methods.
 
 If the first argument to C<import> after C<$class> begins with C<$>, this
 is treated as the name to install the object as, so
